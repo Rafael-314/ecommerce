@@ -235,6 +235,8 @@ $app->post("/admin/forgot/reset", function(){
 
 $app->get("/admin/categories", function(){
 
+	User::verifyLogin();
+
 	$categories = Category::listAll();
 
 	$page = new Hcode\PageAdmin;
@@ -247,6 +249,8 @@ $app->get("/admin/categories", function(){
 });
 
 $app->get("/admin/categories/create", function(){
+
+	User::verifyLogin();
 
 	$page = new Hcode\PageAdmin;
 
@@ -284,6 +288,8 @@ $app->get("/admin/categories/:idcategory/delete", function($idcategory){
 
 $app->get("/admin/categories/:idcategory", function($idcategory) {
 
+	User::verifyLogin();
+
 	$category = new Category();
 
 	$category->get((int)$idcategory);
@@ -298,6 +304,8 @@ $app->get("/admin/categories/:idcategory", function($idcategory) {
 
 $app->post("/admin/categories/:idcategory", function($idcategory) {
 
+	User::verifyLogin();
+
 	$category = new Category();
 
 	$category->get((int)$idcategory);
@@ -308,6 +316,21 @@ $app->post("/admin/categories/:idcategory", function($idcategory) {
 
 	header('Location: /admin/categories');
 	exit;
+
+});
+
+$app->get("/categories/:idcategory", function($idcategory){
+
+	$category = new Category();
+
+	$category->get((int)$idcategory);
+
+	$page = new Page();
+
+	$page->setTpl("category", [
+		'category'=>$category->getValues(),
+		'produtos'=>[]
+	]);
 
 });
 
