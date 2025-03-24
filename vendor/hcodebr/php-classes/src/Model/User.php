@@ -27,7 +27,7 @@ class User extends Model {
 		));
 
 		if (count($results) === 0) {
-			throw new \Exception("Usuário inexistente ou senha inválida.");
+			throw new \Exception("Usuário inexistente ou senha inválida."); 
 		}
 
 		$data = $results[0];
@@ -44,7 +44,9 @@ class User extends Model {
 
 			return $user;
 		} else {
+
 			throw new \Exception("Usuário inexistente ou senha inválida.");
+
 		}
 	}
 
@@ -88,7 +90,6 @@ class User extends Model {
 	public function save() {
 
 		$sql = new Sql();
-		
 
 		$results = $sql->select("CALL sp_users_save(:desperson, :deslogin, :despassword, :desemail, :nrphone, :inadmin)", array(
 			":desperson"=>$this->getdesperson(),
@@ -113,7 +114,7 @@ class User extends Model {
 	 ));
 	 
 	 $data = $results[0];
-	 
+	  
 	 $this->setData($data);
 	 
 	 }
